@@ -30,9 +30,9 @@ Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.
 * Used the following API to get the currency list: https://www.bankofcanada.ca/valet/groups/FX_RATES_DAILY/json. Wanted to get the full list Bank of Canada supported, so that the app can support new currency as well as no longer support any depericated currency. It would help to add to the user experience as well as avoiding any unnessary errors (if a currency is depricated).
 * Used the following API to pull the daily average: https://www.bankofcanada.ca/valet/observations/group/FX_RATES_DAILY/json. There API's decidicated to certain currency conversion, but thought it was easier to pull it from one source rather then multiple. Also avoiding the risk for that currency not being available.
 * Converter Service is used to pull the API's nesessary to support:
-** Getting the min / max date, this will help so that we can support as far back as what the Bank of Canada can support as well as the last date is supporting
-** Getting the list of current currencys so the user is able to pick and choose what they want to convert
-** Converting currency from/to CAD
+	* Getting the min / max date, this will help so that we can support as far back as what the Bank of Canada can support as well as the last date is supporting
+	* Getting the list of current currencys so the user is able to pick and choose what they want to convert
+	* Converting currency from/to CAD
 * Converter Component is used for user to pick the currency to convert. The can either convert it to CAD or from CAD as well as the option to pick the date based on the currency
 * Converter Details is used to show the result of the conversion. It will show the conversion based on the entered amount from the user as well as the the dollar rate for each to/from currency based on the date chosen.
 
