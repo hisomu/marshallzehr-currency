@@ -1,0 +1,29 @@
+<mat-card *ngIf="conversionResult$ | async as conversion">
+	<ng-container *ngIf="conversion.result > 0; else notFound">
+		<div fxLayout="row" fxLayoutAlign="center">
+			<!-- display result based on entered amount -->
+			<h3>{{ conversion.amount | number: '1.2' }} {{ conversion.from | uppercase }} = {{ conversion.result | number: '1.4' }}
+				{{ conversion.to | uppercase }}
+			</h3>
+		</div>
+		<div fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center">
+			<div fxHide.xs fxFlex="1 1 25%">&nbsp;</div>
+			<!-- display dollar currency from both CAD and foreign -->
+			<div fxLayout="column" fxLayoutAlign="center center" fxFlex="1 1 50%">
+				<p>
+					1 {{ conversion.to | uppercase }} = {{ +conversion.toRate | number }} {{ conversion.from | uppercase }}
+				</p>
+				<p>
+					1 {{ conversion.from | uppercase }} = {{ +conversion.fromRate | number }} {{ conversion.to | uppercase }}
+				</p>
+			</div>
+			<div fxFlex="1 1 25%" fxLayoutAlign="flex-end flex-end">Last Updated: {{ conversion.date | date:'longDate' }}</div>
+		</div>
+	</ng-container>
+	<!-- display not found if there are no results -->
+	<ng-template #notFound>
+		<div fxLayout="row" fxLayoutAlign="center">
+			<h3>Sorry, conversion {{ conversion.from | uppercase }} to {{ conversion.to | uppercase }} was not found</h3>
+		</div>
+	</ng-template>
+</mat-card>

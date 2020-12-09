@@ -1,10 +1,23 @@
 import { NgModule } from '@angular/core';
-import { Routes, RouterModule } from '@angular/router';
+import { RouterModule, Routes } from '@angular/router';
 
-const routes: Routes = [];
+import { ConverterComponent } from './converter/components/converter/converter.component';
+
+const routes: Routes = [
+	{
+		path: '',
+
+		children: [
+			{ path: '', pathMatch: 'full', redirectTo: 'converter' },
+
+			// birthdays
+			{ path: 'converter', component: ConverterComponent }
+		]
+	}
+];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule]
+	imports: [RouterModule.forRoot(routes)],
+	exports: [RouterModule]
 })
 export class AppRoutingModule { }

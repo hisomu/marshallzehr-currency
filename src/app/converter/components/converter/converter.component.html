@@ -1,0 +1,65 @@
+<!-- load content as long is it's available and there are no errors -->
+<div *ngIf="(!isError && currencyDateRange$ | async); else loading" class="converter-container" fxLayout="column" fxLayoutGap="1.5rem">
+	<mat-card>
+		<mat-card-content>
+			<form [formGroup]="currencyConverterForm" fxLayout="row wrap" fxLayoutGap="0.5rem" fxLayoutAlign="center" (ngSubmit)="currencyConverterForm.valid && convert()">
+				<mat-form-field appearance="outline">
+					<input matInput placeholder="Amount" id="amount" formControlName="amount" type="number">
+					<mat-error>Format is numerical and a max of 4 decimal places</mat-error>
+				</mat-form-field>
+				<mat-form-field appearance="outline">
+					<input type="text" class="from" placeholder="From" name="fromCurrency" aria-label="From" matInput formControlName="fromCurrency" [matAutocomplete]="fromAutocomplete" [readonly]="isToCAD">
+					<mat-autocomplete #fromAutocomplete>
+						<mat-option *ngFor="let fromItem of (filteredFromCurrencies$ | async); trackBy: trackBySvc.trackByAny" [value]="fromItem">
+							{{fromItem}}
+						</mat-option>
+					</mat-autocomplete>
+					<mat-error>A valid currency must be selected</mat-error>
+				</mat-form-field>
+				<div class="converter-btn">
+					<button type="button" mat-icon-button class="reverse-btn" color="accent" (click)="swapCurrencies()"
+						aria-label="Swap currencies">
+						<mat-icon>compare_arrows</mat-icon>
+					</button>
+				</div>
+				<mat-form-field appearance="outline">
+					<input type="text" class="to" class="uppercase" placeholder="To" aria-label="To" matInput formControlName="toCurrency" [matAutocomplete]="toAutocomplete" [readonly]="!isToCAD">
+					<mat-autocomplete #toAutocomplete>
+						<mat-option *ngFor="let toItem of (filteredToCurrencies$ | async); trackBy: trackBySvc.trackByAny" [value]="toItem">
+							{{toItem}}
+						</mat-option>
+					</mat-autocomplete>
+					<mat-error>A valid currency must be selected</mat-error>
+				</mat-form-field>
+				<mat-form-field *ngIf="(currencyDateRange$ | async) as dateRange">
+					<mat-label>Rate on</mat-label>
+					<input matInput [max]="dateRange.max" [min]="dateRange.min" [matDatepicker]="dp" formControlName="date">
+					<mat-datepicker-toggle matSuffix [for]="dp"></mat-datepicker-toggle>
+					<mat-datepicker #dp [disabled]="false"></mat-datepicker>
+				</mat-form-field>
+				<div class="converter-btn">
+					<button type="button" mat-raised-button color="accent" (click)="convert()">Convert</button>
+				</div>
+			</form>
+		</mat-card-content>
+	</mat-card>
+	<mz-converter-details></mz-converter-details>
+</div>
+
+<!-- loading view -->
+<ng-template #loading>
+	<div class="blankSlate loading" fxLayout="column" fxLayoutAlign="center center">
+		<br />
+		<mat-progress-spinner mode="indeterminate" color="accent"></mat-progress-spinner>
+		<br />
+		<h2>Loading your currency data</h2>
+	</div>
+</ng-template>
+
+<!-- error view -->
+<ng-container *ngIf="isError">
+	<div class="blankSlate error" fxLayout="column">
+		<h2 class="mat-display-1">Something doesn&rsquo;t look right</h2>
+		<p>Failed to retrive data from Bank of Canada</p>
+	</div>
+</ng-container>

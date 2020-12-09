@@ -1,0 +1,33 @@
+.converter-container {
+	margin: 5%;
+	padding: 25px;
+
+	.converter-btn {
+		line-height: 3.75rem;
+	}
+
+	.reverse-btn:hover {
+			border: 1px solid;
+	}
+}
+
+.blankSlate {
+	&.loading{
+		height: calc(100vh - 64px - 1rem);
+	}
+	color: white;
+	height: calc(100vh - 72px - 64px - 1rem);
+	min-height: 400px;
+	align-items: center;
+	justify-content: center;
+	text-align: center;
+	.mat-display-1 {
+		margin-bottom:1rem;
+	}
+
+	p {
+		font-size: 20px;
+		font-weight: 300;
+		max-width: 500px;
+	}
+}

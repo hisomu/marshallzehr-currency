@@ -1,1 +1,30 @@
-/* You can add global styles to this file, and also import other style files */
+@import '~@angular/material/theming';
+
+@include mat-core();
+
+$colors: $mat-deep-orange,$mat-red,$mat-pink,$mat-purple,$mat-deep-purple,$mat-blue,$mat-light-blue,$mat-cyan,$mat-teal,$mat-green,$mat-light-green,$mat-lime,$mat-yellow,$mat-orange;
+
+$primary: mat-palette(nth($colors, random(length($colors))));
+$accent: mat-palette(nth($colors, random(length($colors))));
+
+$theme: mat-dark-theme($primary, $accent);
+$light-theme: mat-light-theme($primary, $accent);
+
+@include angular-material-theme($theme);
+
+.light {
+	@include angular-material-theme($light-theme)
+}
+
+.list-item-active, .list-item-active:hover {
+	font-weight: bold;
+	color: mat-color($accent, darker) !important;
+	background: rgba(0, 0, 0, 0.1);
+}
+
+
+body, html {
+	padding:0;
+	margin: 0;
+	background-color: #303030;
+}
